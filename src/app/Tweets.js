@@ -14,7 +14,8 @@ class Tweets extends Component {
             tweets: [],
             valores: [1,2,3,4,5],
             token: null,
-            comentario: ''
+            comentario: '',
+            usuarioId: ''
         };
     }
 
@@ -24,6 +25,8 @@ class Tweets extends Component {
 
     obtenerTweets(){
         let token = localStorage.getItem('token');
+        var decoded = jwt_decode(token);
+        const id = decoded.id;
         fetch('/tweets', {
             method: 'GET',
             headers: {
@@ -32,7 +35,9 @@ class Tweets extends Component {
         })
             .then(response => response.json())
             .then(tweets => {
-                this.setState({tweets})
+                this.setState({
+                    usuarioId: id,
+                    tweets: tweets})
             })
             .catch(err => console.log(err));
     }
@@ -58,7 +63,8 @@ class Tweets extends Component {
         .then(data => {
             console.log(data);
             //window.M.toast({html: 'Task Saved'});
-            this.setState({comentario: ''});
+            this.setState({
+                comentario: ''});
         })
         .catch(err => console.error(err));
     }
@@ -78,12 +84,9 @@ class Tweets extends Component {
                     {
                         this.state.tweets && this.state.tweets.map((tweet, key) => 
                         <li key={key}>
-                            <div className="card border-success mb-3">
-                                <div className="card-header bg-transparent border-success">
+                            <div className="card border-success mb-3 bg-transparent border-success">
+                                <div className="card-header">
                                     <div className="row">
-                                        <div className="col">
-                                            <p className="card-text">{tweet._id}</p>
-                                        </div>
                                         <div className="col">
                                             <p className="card-text">{tweet.fecha}</p>
                                         </div>
@@ -93,6 +96,19 @@ class Tweets extends Component {
                                         <div className="col">
                                             <p className="card-text">{tweet.likes}</p>
                                         </div>
+                                        {
+                                            this.state.usuarioId === tweet.usuario ?
+                                            <div className="col">
+                                                <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
+                                                <button type="submit" className="btn btn-primary bg-info">Edit</button>
+                                                <button type="submit" className="btn btn-primary bg-danger">Delete</button>
+                                            </div> 
+                                            :
+                                            <div className="col">
+                                            <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
+                                        </div>
+                                        }
+                                        
                                     </div>
                                 </div>
                                 <div className="card-body text-success">
@@ -102,7 +118,7 @@ class Tweets extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="card-footer bg-transparent border-success">
+                                <div className="card-footer">
                                     <Collapsible trigger="Comentarios">
                                     <ul>
                                         {

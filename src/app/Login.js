@@ -40,7 +40,10 @@ class Login extends Component {
         return (
             <div className="App">
                 <div className="row">
-                    <div className="col-6 alert alert-danger d-flex justify-content-center align-items-center">
+                    <div className="col-4">
+
+                    </div>
+                    <div className="col-4 alert alert-danger d-flex justify-content-center align-items-center">
                         <form onSubmit={this.login.bind(this)} className="form">
                             <div className="form-group form-check">
                                 <h4><span className="badge badge-pill badge-info">Ingresar</span></h4>
@@ -57,6 +60,9 @@ class Login extends Component {
                                 <button type="submit" className="btn btn-primary bg-info">Aceptar</button>
                             </div>
                         </form>
+                    </div>
+                    <div className="col-4">
+
                     </div>
                 </div>
             </div>

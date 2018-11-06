@@ -1,6 +1,18 @@
 .App {
   text-align:center;
 }
+.Header {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.947);
+  height: 85px;
+}
+.columna1 {
+  background-color: rgb(127, 127, 255);
+}
+
+.columna2 {
+  background-color: rgb(255, 185, 127);
+}
 
 .Menu li {
   display: inline-block;

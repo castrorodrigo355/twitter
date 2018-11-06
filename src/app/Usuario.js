@@ -41,7 +41,14 @@ class Usuario extends Component {
             
             <div className="App">
                 <div className="card border-success mb-3">
-                    <div className="card-header bg-transparent border-success">
+                    <div className="card-header">
+                        <div className="row">
+                            <div className="col">
+                                <p className="card-text">DATOS DEL USUARIO</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card-body text-success">
                         <div className="row">
                             <div className="col">
                                 <p className="card-text">{usuario.nombre}</p>
@@ -54,7 +61,7 @@ class Usuario extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="card-body text-success">
+                    <div className="card-footer">
                         <div className="row">
                             <div className="col">
                                 <p className="card-text">{usuario.dni}</p>
@@ -63,9 +70,6 @@ class Usuario extends Component {
                                 <p className="card-text">{usuario.celular}</p>
                             </div>
                         </div>
-                    </div>
-                    <div className="card-footer bg-transparent border-success">
-                        
                     </div>
                 </div>  
             </div> 
