@@ -1,5 +1,6 @@
 const express = require("express");
 const Tweet = require("../models/tweetModel")
+const routerComentarios = require("./comentarios")
 const router = express.Router();
 
 // CREAR UN TWEET
@@ -45,6 +46,6 @@ router.delete("/:id", (req, res) => {
 //     })
 // })
 
-// router.use("/:id/vuelos", routerVuelos)
+router.use("/:id/comentarios", routerComentarios)
 
 module.exports = router;

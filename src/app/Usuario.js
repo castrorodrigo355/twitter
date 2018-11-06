@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import jwt_decode from 'jwt-decode';
+// import logo from './logo.svg';
 // import ModalView from './ModalView';
 import './App.css';
 
@@ -64,11 +65,12 @@ class Usuario extends Component {
                         </div>
                     </div>
                     <div className="card-footer bg-transparent border-success">
-                        emsfkskefmskfmekfmske
+                        
                     </div>
                 </div>  
             </div> 
         );
     }
 }
+
 export default Usuario;

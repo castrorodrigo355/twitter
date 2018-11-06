@@ -14,6 +14,17 @@ module.exports = {
         {
           use: ['style-loader', 'css-loader'],
           test: /\.css$/
+        },{
+          test: /\.svg$/,
+          loaders: [
+            'babel-loader',
+            {
+              loader: 'react-svg-loader',
+              query: {
+                jsx: true
+              }
+            },
+          ]
         }
       ]
     }
