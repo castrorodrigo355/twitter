@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-// import Usuarios from './Usuarios';
-// import VuelosUsuario from './VuelosUsuario';
+import Usuario from './Usuario';
 import Tweets from './Tweets';
 // import ModalView from './ModalView';
 import './App.css';
@@ -11,17 +10,14 @@ class Home extends Component {
         return(
             <div className="App">
                 Bienvenido a Home
-                <Tweets/>
-                {/* <div className="row">
-                    <Usuarios/>
-                </div>
                 <div className="row">
-                    <FormVuelosUsuario/>
-                </div>
-                <div className="row">
-                    <VuelosUsuario/>
-                </div> */}
-                
+                    <div className="col-3">
+                        <Usuario/>
+                    </div>
+                    <div className="col-9">
+                        <Tweets/>
+                    </div>
+                </div>  
             </div> 
         );
     }

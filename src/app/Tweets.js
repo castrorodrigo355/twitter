@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Collapsible from 'react-collapsible';
 // import Usuarios from './Usuarios';
 // import VuelosUsuario from './VuelosUsuario';
 // import ModalView from './ModalView';
@@ -10,6 +11,7 @@ class Tweets extends Component {
         super();
         this.state = {
             tweets: [],
+            valores: [1,2,3,4,5],
             token: null
         };
     }
@@ -36,42 +38,47 @@ class Tweets extends Component {
     render() {
         return (
             <div className="App">
-                <table className="table table-bordered table-striped rounded">
-                        <thead>
-                            <tr className="alert alert-danger">
-                            <th scope="col"><h4 className="font-italic">titulo</h4></th>
-                            <th scope="col"><h4 className="font-italic">fecha</h4></th>
-                            <th scope="col"><h4 className="font-italic">descripcion</h4></th>
-                            <th scope="col"><h4 className="font-italic">likes</h4></th>
-                            <th scope="col"><h4 className="font-italic">Opciones</h4></th>
-                            </tr>
-                        </thead>
-                        {this.state.tweets.map((tw, i) => {
-                            return(
-                                <tbody className="alert alert-dark" key={i}>
-                                    {
-                                    <tr>
-                                    <td>{tw.titulo}</td>
-                                    <td>{tw.fecha}</td>
-                                    <td>{tw.descripcion}</td>
-                                    <td>{tw.likes}</td>
-                                    <td>
-                                        <div className="form-row">
+                <ul>
+                    {
+                        this.state.tweets && this.state.tweets.map((tweet, key) => 
+                        <li key={key}>
+                            <div className="card border-success mb-3">
+                                <div className="card-header bg-transparent border-success">
+                                    <div className="row">
                                         <div className="col">
-                                            <h6><button className = "badge badge-pill badge-info">Edit</button></h6>
+                                            <p className="card-text">{tweet.fecha}</p>
                                         </div>
                                         <div className="col">
-                                            <h6><button className = "badge badge-pill btn btn-danger">Delete</button></h6>
+                                            <p className="card-text">{tweet.titulo}</p>
                                         </div>
-                                        </div>  
-                                    </td>
-                                    </tr>  
-                                    }        
-                                </tbody>
-                            )          
-                            })
-                        }
-                </table>
+                                        <div className="col">
+                                            <p className="card-text">{tweet.likes}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card-body text-success">
+                                    <div className="row">
+                                        <div className="col">
+                                            <p className="card-text">{tweet.descripcion}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card-footer bg-transparent border-success">
+                                    <Collapsible trigger="Comentarios">
+                                        <ul>
+                                            {
+                                                this.state.valores && this.state.valores.map((valor, key) => 
+                                                <li key={key}>{valor}</li>
+                                                )
+                                            }
+                                        </ul>
+                                    </Collapsible>
+                                </div>
+                            </div>
+                        </li>
+                        )
+                    }
+                </ul>
             </div>
         );
     }
