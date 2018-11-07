@@ -3,7 +3,7 @@ var comentario = new Schema({
         nombre: String, 
         apellido: String,
         comentario: String,
-        autor: String})
+        tweetId: { type: Schema.ObjectId, ref: "Twit" }})
 var Comentario = mongoose.model("Comentario", comentario)
 
 module.exports = Comentario

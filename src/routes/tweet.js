@@ -29,14 +29,14 @@ router.get("/:id", (req, res) => {
         });
 })
 
-// ELIMINAR UN DETERMINADO USUARIO MEDIANTE UN "id"
+// ELIMINAR UN DETERMINADO TWEET MEDIANTE UN "id"
 router.delete("/:id", (req, res) => {
     Tweet.findByIdAndDelete(req.params.id)
         .then(result => res.status(204).json({ messsage: 'deleted!'}))
         .catch(err => res.status(503).json(err));
 })
 
-// ACTUALIZAR UN DETERMINADO USUARIO MEDIANTE UN "id"
+// ACTUALIZAR UN DETERMINADO TWEET MEDIANTE UN "id"
 router.put("/:id", (req, res) => {
     Tweet.findByIdAndUpdate(req.params.id, {$set: {"descripcion": req.body.descripcion
                                                   }}, {new: true}, (err, doc) => {

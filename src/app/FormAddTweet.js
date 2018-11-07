@@ -25,15 +25,20 @@ class FormAddTweet extends Component {
         let token = localStorage.getItem('token');
         var decoded = jwt_decode(token);
         const id = decoded.id;
+        const date = new Date();
+        const dia = date.getDate();
+        const mes = date.getMonth() + 1;
+        const anio = date.getFullYear();
+        const fecha = dia+"/"+mes+"/"+anio;
         fetch(`/tweets`, {
             method: 'POST',
             body: JSON.stringify({
                         titulo: this.state.titulo,
-                        fecha: new Date(),
+                        fecha: fecha,
                         descripcion: this.state.descripcion,
                         likes: 0,
                         comentarios: [],
-                        usuario: id
+                        usuarioId: id
             }),
             headers: {
                 token,
@@ -72,12 +77,10 @@ class FormAddTweet extends Component {
                                 </div>
                         </form>
                     </div>
-                    <div className="card-footer">
-                        
-                    </div>
                 </div>
             </div> 
         );
     }
 }
+
 export default FormAddTweet;
