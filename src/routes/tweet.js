@@ -12,7 +12,7 @@ router.post("/", (req, res) => {
         .catch(err => res.status(503).json(err));
 })
 
-// OBTENER LA LISTA DE Tweeters
+// OBTENER LA LISTA COMPLETA DE TWEETS
 router.get("/", (req, res) => {
     Tweet.find({}).then(tweets => res.json (tweets));
 })
