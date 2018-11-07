@@ -32,19 +32,17 @@ router.get("/:id", (req, res) => {
 // ELIMINAR UN DETERMINADO USUARIO MEDIANTE UN "id"
 router.delete("/:id", (req, res) => {
     Tweet.findByIdAndDelete(req.params.id)
-        .then( result => res.status(204).json({ messsage: 'deleted!'}))
-        .catch( err => res.status(503).json(err));
+        .then(result => res.status(204).json({ messsage: 'deleted!'}))
+        .catch(err => res.status(503).json(err));
 })
 
 // ACTUALIZAR UN DETERMINADO USUARIO MEDIANTE UN "id"
-// router.put("/:id", (req, res) => {
-//     User.findByIdAndUpdate(req.params.id, {$set: {"nombre": req.body.nombre, 
-//                                                   "apellido": req.body.apellido,
-//                                                   "celular": req.body.celular
-//                                                   }}, {new: true}, (err, doc) => {
-//         err ? res.json(err) : res.json(doc)
-//     })
-// })
+router.put("/:id", (req, res) => {
+    Tweet.findByIdAndUpdate(req.params.id, {$set: {"descripcion": req.body.descripcion
+                                                  }}, {new: true}, (err, doc) => {
+        err ? res.json(err) : res.json(doc)
+    })
+})
 
 router.use("/:id/comentarios", routerComentarios)
 

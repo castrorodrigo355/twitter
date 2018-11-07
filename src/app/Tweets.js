@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import Collapsible from 'react-collapsible';
 import jwt_decode from 'jwt-decode';
-// import Usuarios from './Usuarios';
-// import VuelosUsuario from './VuelosUsuario';
-// import ModalView from './ModalView';
+import Modal from 'react-modal';
 import './App.css';
+
+const customStyles = {
+    content : {
+      top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)'
+    }
+  };
 
 class Tweets extends Component {
 
@@ -12,15 +16,44 @@ class Tweets extends Component {
         super();
         this.state = {
             tweets: [],
-            valores: [1,2,3,4,5],
+            modalIsOpen: false,
             token: null,
             comentario: '',
-            usuarioId: ''
+            descripcion: '',
+            usuarioId: '',
+            usuarioLogueado: null,
+            tweetId: ''
         };
+        this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     componentDidMount() {
         this.obtenerTweets()
+        this.obtenerUser()
+    }
+
+    componentWillMount() {
+        Modal.setAppElement('body');
+     }
+
+     openModal(i) {
+        this.setState({
+            modalIsOpen: true,
+            tweetId: this.state.tweets[i]._id,
+            descripcion: this.state.tweets[i].descripcion,
+        });
+    }
+
+    afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        this.subtitle.style.color = '#f00';
+    }
+
+    closeModal() {
+        this.setState({
+            modalIsOpen: false
+        });
     }
 
     obtenerTweets(){
@@ -33,13 +66,31 @@ class Tweets extends Component {
                 token
             }
         })
-            .then(response => response.json())
-            .then(tweets => {
-                this.setState({
-                    usuarioId: id,
-                    tweets: tweets})
-            })
-            .catch(err => console.log(err));
+        .then(response => response.json())
+        .then(tweets => {
+            this.setState({
+                usuarioId: id,
+                tweets: tweets})
+        })
+        .catch(err => console.log(err));
+    }
+
+    obtenerUser(){
+        let token = localStorage.getItem('token');
+        var decoded = jwt_decode(token);
+        const id = decoded.id;
+        fetch(`/usuarios/${id}`, {
+            method: 'GET',
+            headers: {
+                token
+            }
+        })
+        .then(response => response.json())
+        .then(usuarioLogueado => {
+            this.setState({usuarioLogueado})
+            console.log(usuarioLogueado)
+        })
+        .catch(err => console.log(err));
     }
 
     comentarTweet(idTweet){
@@ -49,8 +100,8 @@ class Tweets extends Component {
         const id = decoded.id;
         fetch(`/tweets/${idTweet}/comentarios`, {
             method: 'POST',
-            body: JSON.stringify({nombre: decoded.nombre,
-                                  apellido: decoded.apellido,
+            body: JSON.stringify({nombre: this.state.usuarioLogueado.nombre,
+                                  apellido: this.state.usuarioLogueado.apellido,
                                   comentario: this.state.comentario,
                                   autor: id}),
             headers: {
@@ -62,7 +113,6 @@ class Tweets extends Component {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            //window.M.toast({html: 'Task Saved'});
             this.setState({
                 comentario: ''});
         })
@@ -75,6 +125,63 @@ class Tweets extends Component {
         this.setState({
           [name]: value
         });
+    }
+
+    retweetear(tweet){
+        console.log(tweet)
+    }
+
+    deleteTweet(idTweet){
+        let token = localStorage.getItem('token');
+        fetch(`/tweets/${idTweet}`, {
+            method: 'DELETE',
+            headers: {
+                token
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+                console.log(data);
+        });
+        this.obtenerTweets();
+    }
+
+    deleteComentario(idTweet, idComentario){
+        let token = localStorage.getItem('token');
+        fetch(`/tweets/${idTweet}/comentarios/${idComentario}`, {
+            method: 'DELETE',
+            headers: {
+                token
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+                console.log(data);
+        });
+        this.obtenerTweets();
+    }
+
+    actualizarTweet(){
+        let token = localStorage.getItem('token');
+        fetch(`/tweets/${this.state.tweetId}`, {
+            method: 'PUT',
+            body: JSON.stringify({descripcion: this.state.descripcion}),
+            headers: {
+                token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            this.setState({
+                modalIsOpen: false,
+                tweetId: '',
+                descripcion: ''
+            });
+        })
+        .catch(err => console.error(err));
     }
     
     render() {
@@ -99,13 +206,30 @@ class Tweets extends Component {
                                         {
                                             this.state.usuarioId === tweet.usuario ?
                                             <div className="col">
-                                                <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
-                                                <button type="submit" className="btn btn-primary bg-info">Edit</button>
-                                                <button type="submit" className="btn btn-primary bg-danger">Delete</button>
+                                                <button type="submit" onClick={this.retweetear.bind(this, tweet)} className="btn btn-primary bg-alert">Retweet</button>
+                                                <button type="submit" onClick={this.openModal.bind(this, key)} className="btn btn-primary bg-info">Edit</button>
+                                                    <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} 
+                                                            onRequestClose={this.closeModal} style={customStyles} contentLabel="Example Modal">
+                                                        <h2 ref={subtitle => this.subtitle = subtitle}>Actualizar Tweet</h2>
+                                                        <form onSubmit={this.actualizarTweet.bind(this)}>
+                                                            <div className="form-row">
+                                                                <div className="form-group col-md-6">
+                                                                    <input type="text" className="form-control" name="descripcion" 
+                                                                            defaultValue={this.state.descripcion} 
+                                                                            onChange={this.handleInputChange.bind(this)} placeholder="Descripcion..."/>
+                                                                </div>
+                                                                <div className="form-group form-check">
+                                                                    <button type="submit" className="btn btn-primary bg-info">Aceptar</button>
+                                                                    <button className="btn btn-danger" onClick={this.closeModal}>Cancelar</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </Modal>
+                                                <button type="submit" onClick={this.deleteTweet.bind(this, tweet._id)} className="btn btn-primary bg-danger">Delete</button>
                                             </div> 
                                             :
                                             <div className="col">
-                                            <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
+                                            <button type="submit" onClick={this.retweetear.bind(this, tweet)} className="btn btn-primary bg-alert">Retweet</button>
                                         </div>
                                         }
                                         
@@ -124,7 +248,43 @@ class Tweets extends Component {
                                         {
                                             tweet.comentarios.map((coment, i) => 
                                                 <li key={i}>
-                                                    {coment.comentario}
+                                                    {
+                                                        this.state.usuarioId === coment.autor ?
+                                                        <div className="card">
+                                                            <div className="card-header">
+                                                                <div className="row">
+                                                                    <div className="col">
+                                                                        <p className="card-text">{coment.nombre}</p>
+                                                                    </div>
+                                                                    <div className="col">
+                                                                        <p className="card-text">{coment.apellido}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="card-body">
+                                                                <h5 className="card-title">{coment.comentario}</h5>
+                                                                <button type="submit" className="btn btn-primary bg-info">Like</button>
+                                                                <button type="submit" onClick={this.deleteComentario.bind(this, tweet._id, coment._id)} className="btn btn-primary bg-danger">Delete</button>
+                                                            </div>
+                                                        </div>
+                                                        :
+                                                        <div className="card">
+                                                            <div className="card-header">
+                                                                <div className="row">
+                                                                    <div className="col">
+                                                                        <p className="card-text">{coment.nombre}</p>
+                                                                    </div>
+                                                                    <div className="col">
+                                                                        <p className="card-text">{coment.apellido}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="card-body">
+                                                                <h5 className="card-title">{coment.comentario}</h5>
+                                                                <button type="submit" className="btn btn-primary bg-info">Like</button>
+                                                            </div>
+                                                        </div>
+                                                    }
                                                 </li>
                                             )
                                         }

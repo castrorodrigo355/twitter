@@ -22,7 +22,6 @@ class FormAddTweet extends Component {
     }
 
     agregarTweet(){
-        
         let token = localStorage.getItem('token');
         var decoded = jwt_decode(token);
         const id = decoded.id;
@@ -54,7 +53,6 @@ class FormAddTweet extends Component {
     render(){
         return(
             <div className="App">
-
                 <div className="card border-success mb-3">
                     <div className="card-header">
                         QUE ESTAS PENSANDO TWEETEAR ???
@@ -69,12 +67,13 @@ class FormAddTweet extends Component {
                                 <input type="text" className="form-control" name="descripcion" 
                                         onChange={this.handleInputChange.bind(this)} value={this.state.descripcion} placeholder="Descripcion"/>
                             </div>
+                                <div className="form-group form-check">
+                                    <button type="submit" className="btn btn-primary bg-info">Twittear</button>
+                                </div>
                         </form>
                     </div>
                     <div className="card-footer">
-                        <div className="form-group form-check">
-                            <button type="submit" className="btn btn-primary bg-info">Twittear</button>
-                        </div>
+                        
                     </div>
                 </div>
             </div> 

@@ -28,7 +28,7 @@ class Usuario extends Component {
             .then(response => response.json())
             .then(usuario => {
                 this.setState({usuario})
-                console.log(this.state.usuario)
+                //console.log(this.state.usuario)
             })
             .catch(err => console.log(err));
 
@@ -59,6 +59,9 @@ class Usuario extends Component {
                             <div className="col">
                                 <p className="card-text">{usuario.email}</p>
                             </div>
+                        </div>
+                        <div className="row">
+                            <p className="card-text">{usuario._id}</p>
                         </div>
                     </div>
                     <div className="card-footer">
