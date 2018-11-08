@@ -19,6 +19,9 @@ app.use("/usuarios", authValidator, routerUsuarios);
 const routerTwit = require("./routes/tweet");
 app.use('/tweets', routerTwit);
 // -----------------------------------------------------------------
+const routerComentario = require("./routes/comentarios");
+app.use('/comentarios', routerComentario);
+// -----------------------------------------------------------------
 app.get("/*", (req, res) => {
     res.end("Archivo no encontrado");
 });

@@ -1,49 +1,34 @@
 const express = require("express");
-const router = express.Router({mergeParams : true});
+const router = express.Router();
 const User = require("../models/usuarioModel")
 const Tweet = require("../models/tweetModel")
 const Comentario = require("../models/comentarioModel")
 
-// DADO UN TWEET CREAR UN COMENTARIO
+// CREAR UN COMENTARIO
 router.post("/", (req, res) => {
-    const unComentario = new Comentario(req.body)
-    //console.log(req.body)
-    Tweet.findOne({_id: req.params.id}, (err, tweet) => {
-            err ? res.json(err) : res.json(tweet)
-            tweet.comentarios.push(unComentario)
-            tweet.save()
-    })
+    let data = req.body;
+    let comentario = new Comentario(data);
+    comentario.save()
+        .then(result => res.status(201).json(result))
+        .catch(err => res.status(503).json(err));
 })
 
 // OBTENER LA LISTA DE COMENTARIOS DE UN TWEET
-router.get("/", (req, res) => {
-    Tweet.findOne({_id: req.params.id}, (err, tweet) => {
-        err ? res.json(err) : res.json(tweet.comentarios)
+router.get("/:idTweet", (req, res) => {
+    Comentario.find({tweetId: req.params.idTweet}, (err, comentarios) => {
+        err ? res.json(err) : res.json(comentarios)
     })
 })
 
-// OBTENER EL VUELO "id" DE UN USUARIO
-// router.get("/:idVuelo", (req, res) => {
-//     User.findOne({_id: req.params.id}, (err, usuario) => {
+// ELIMINAR EL COMENTARIO "id" DE UN TWEET "idTweet"
+// router.delete("/:idComentario", (req, res) => {
+//     Comentario.findOne({_id: req.params.id}, (err, tweet) => {
 //         if(err) res.json(err)
-//         unVuelo = usuario.vuelos.find(unVuelo => unVuelo._id == req.params.idVuelo)
-//         if(unVuelo){
-//             res.json(unVuelo)
-//         }else{
-//             res.json({mensaje:"Vuelo no encontrado"})
-//         }
+//         tweet.comentarios = tweet.comentarios.filter(c => c._id != req.params.idComentario)
+//         tweet.save()
+//         res.json({mensaje:"Comentario eliminado"})
 //     })
 // })
-
-// ELIMINAR EL COMENTARIO "id" DE UN TWEET
-router.delete("/:idComentario", (req, res) => {
-    Tweet.findOne({_id: req.params.id}, (err, tweet) => {
-        if(err) res.json(err)
-        tweet.comentarios = tweet.comentarios.filter(c => c._id != req.params.idComentario)
-        tweet.save()
-        res.json({mensaje:"Comentario eliminado"})
-    })
-})
 
 // ACTUALIZAR UN VUELO DE UN DETERMINADO USUARIO MEDIANTE UN "id"
 // router.put("/:idVuelo", (req, res) => {

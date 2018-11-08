@@ -8,7 +8,7 @@ const customStyles = {
     content : {
       top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)'
     }
-  };
+};
 
 class Tweets2 extends Component {
 
@@ -35,9 +35,9 @@ class Tweets2 extends Component {
 
     componentWillMount() {
         Modal.setAppElement('body');
-     }
+    }
 
-     openModal(i) {
+    openModal(i) {
         this.setState({
             modalIsOpen: true,
             tweetId: this.state.tweets[i]._id,

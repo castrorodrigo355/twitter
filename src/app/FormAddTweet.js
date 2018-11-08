@@ -37,7 +37,6 @@ class FormAddTweet extends Component {
                         fecha: fecha,
                         descripcion: this.state.descripcion,
                         likes: 0,
-                        comentarios: [],
                         usuarioId: id
             }),
             headers: {

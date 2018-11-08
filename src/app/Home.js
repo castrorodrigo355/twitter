@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import Usuario from './Usuario';
+import UsuarioProfile from './UsuarioProfile';
 import Tweets from './Tweets';
 import FormAddTweet from './FormAddTweet';
 // import ModalView from './ModalView';
 import './App.css';
 
-class Home extends Component {  
+class Home extends Component {
     
     render(){
         return(
@@ -19,7 +19,7 @@ class Home extends Component {
                 </div>
                 <div className="row">
                     <div className="col-3 columna1">
-                        <Usuario/>
+                        <UsuarioProfile/>
                         <FormAddTweet/>
                     </div>
                     <div className="col-9 columna2">

@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
 import jwt_decode from 'jwt-decode';
-// import logo from './logo.svg';
-// import ModalView from './ModalView';
 import './App.css';
 
-class Usuario extends Component {
+class UsuarioProfile extends Component {
 
     constructor() {
         super();
         this.state = {
             token: null,
             usuario: {},
-            valores: [1,2,3,4,5]
         };
     }
     
@@ -28,17 +25,13 @@ class Usuario extends Component {
             .then(response => response.json())
             .then(usuario => {
                 this.setState({usuario})
-                //console.log(this.state.usuario)
             })
             .catch(err => console.log(err));
-
-        
     }
 
     render(){
         const usuario = this.state.usuario;
         return(
-            
             <div className="App">
                 <div className="card border-success mb-3">
                     <div className="card-header">
@@ -80,4 +73,4 @@ class Usuario extends Component {
     }
 }
 
-export default Usuario;
+export default UsuarioProfile;
