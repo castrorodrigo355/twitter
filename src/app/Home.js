@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import UsuarioProfile from './UsuarioProfile';
 import Tweets from './Tweets';
 import FormAddTweet from './FormAddTweet';
-// import ModalView from './ModalView';
 import './App.css';
 
 class Home extends Component {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Estilos from './Estilos';
 import Home from './Home';
 import Login from './Login';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
@@ -8,12 +9,12 @@ class App extends Component {
     render() {
         let token = localStorage.getItem('token');
         return (
-            <div className="App">
+            <div>
                 <Router>
                     {
                         token ?
                             <div>
-                                <Route exact path={'/'} component={Home} />
+                                <Route exact path={'/'} component={Estilos} />
                             </div>
                             :
                             <div>
