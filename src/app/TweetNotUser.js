@@ -21,6 +21,7 @@ class TweetNotUser extends Component {
                                 <p className="card-text">{tweet.likes}</p>
                             </div>
                             <div className="col">
+                            <button type="submit" className="btn btn-primary bg-secondary">Like</button>
                             <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
                             </div>                                        
                         </div>

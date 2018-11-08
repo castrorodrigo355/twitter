@@ -100,7 +100,11 @@ class TweetUser extends Component {
                                 <p className="card-text">{tweet.titulo}</p>
                             </div>
                             <div className="col">
+                                <p className="card-text">{tweet.likes}</p>
+                            </div>
+                            <div className="col">
                                 <div className="row">
+                                    <button type="submit" className="btn btn-primary bg-secondary">Like</button>
                                     <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
                                     <button type="submit" onClick={this.openModal.bind(this, tweet.descripcion)} className="btn btn-primary bg-info">Edit</button>
                                         <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} 
