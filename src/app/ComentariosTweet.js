@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Collapsible from 'react-collapsible';
 import jwt_decode from 'jwt-decode';
+import CommentUser from './CommentUser';
+import CommentNotUser from './CommentNotUser';
 import './App.css';
 
 class ComentariosTweet extends Component {
@@ -66,21 +68,6 @@ class ComentariosTweet extends Component {
     // retweetear(tweet){
     //     console.log(tweet)
     // }
-
-    // deleteComentario(idTweet, idComentario){
-    //     let token = localStorage.getItem('token');
-    //     fetch(`/tweets/${idTweet}/comentarios/${idComentario}`, {
-    //         method: 'DELETE',
-    //         headers: {
-    //             token
-    //         }
-    //     })
-    //     .then(res => res.json())
-    //     .then(data => {
-    //             console.log(data);
-    //     });
-    //     this.obtenerTweets();
-    // }
     
     render(){
         const {usuario, tweet} = this.props.informacion;
@@ -91,23 +78,13 @@ class ComentariosTweet extends Component {
                     {
                         this.state.comentarios.map((coment, i) => 
                             <li key={i}>
-                                <div className="card">
-                                    <div className="card-header">
-                                        <div className="row">
-                                            <div className="col">
-                                                <p className="card-text">{coment.nombre}</p>
-                                            </div>
-                                            <div className="col">
-                                                <p className="card-text">{coment.apellido}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="card-body">
-                                        <h5 className="card-title">{coment.comentario}</h5>
-                                        <button type="submit" className="btn btn-primary bg-info">Like</button>
-                                        <button type="submit" className="btn btn-primary bg-danger">Delete</button>
-                                    </div>
-                                </div>
+                                {
+                                    usuario._id === coment.usuarioId ?
+                                    <CommentUser informacion={{usuario, tweet, coment, i}}/>  
+                                    :
+                                    <CommentNotUser informacion={{usuario, tweet, coment, i}}/>
+                                }
+                                
                             </li>
                         )
                     }
@@ -128,4 +105,5 @@ class ComentariosTweet extends Component {
         );
     }
 }
+
 export default ComentariosTweet;

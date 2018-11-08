@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import ComentariosTweet from './ComentariosTweet';
 import './App.css';
 
 class TweetNotUser extends Component {
     
     render(){
-        const {tweet, key} = this.props.informacion;
+        const {usuario, tweet, key} = this.props.informacion;
         return(
             <div className="card border-success mb-3 bg-transparent border-success">
                 <div className="card-header">
@@ -17,6 +18,9 @@ class TweetNotUser extends Component {
                         </div>
                         <div className="col">
                             <p className="card-text">{tweet.likes}</p>
+                        </div>
+                        <div className="col">
+                        <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
                         </div>                                        
                     </div>
                 </div>
@@ -28,9 +32,7 @@ class TweetNotUser extends Component {
                     </div>
                 </div>
                 <div className="card-footer">
-                    <div className="row">
-                        <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
-                    </div>
+                    <ComentariosTweet informacion={{usuario, tweet}}/>
                 </div>
             </div>
         );

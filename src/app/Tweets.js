@@ -58,7 +58,7 @@ class Tweets extends Component {
                                 this.state.usuarioLogueado._id === tweet.usuarioId ?
                                 <TweetUser informacion={{usuario, tweet, key}}/>  
                                 :
-                                <TweetNotUser informacion={{tweet, key}}/>
+                                <TweetNotUser informacion={{usuario, tweet, key}}/>
                             }
                         </li>
                         )

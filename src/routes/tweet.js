@@ -44,6 +44,4 @@ router.put("/:id", (req, res) => {
     })
 })
 
-router.use("/:id/comentarios", routerComentarios)
-
 module.exports = router;

@@ -20,35 +20,19 @@ router.get("/:idTweet", (req, res) => {
     })
 })
 
-// ELIMINAR EL COMENTARIO "id" DE UN TWEET "idTweet"
-// router.delete("/:idComentario", (req, res) => {
-//     Comentario.findOne({_id: req.params.id}, (err, tweet) => {
-//         if(err) res.json(err)
-//         tweet.comentarios = tweet.comentarios.filter(c => c._id != req.params.idComentario)
-//         tweet.save()
-//         res.json({mensaje:"Comentario eliminado"})
-//     })
-// })
+// ELIMINAR UN COMENTARIO "id"
+router.delete("/:idComentario", (req, res) => {
+    Comentario.findByIdAndDelete(req.params.idComentario)
+        .then(result => res.status(204).json({ messsage: 'deleted!'}))
+        .catch(err => res.status(503).json(err));
+})
 
-// ACTUALIZAR UN VUELO DE UN DETERMINADO USUARIO MEDIANTE UN "id"
-// router.put("/:idVuelo", (req, res) => {
-//     User.findOne({_id: req.params.id}, (err, usuario) => {
-//         if(err) res.json(err);
-//         const vuelo = usuario.vuelos.find(unVuelo => unVuelo._id == req.params.idVuelo);
-//         vuelo.destino = req.body.destino;
-//         vuelo.duracion = req.body.duracion;
-        
-//         const index = usuario.vuelos.map((unVuelo, i) => {
-//             if(unVuelo._id == vuelo._id){
-//                 return i
-//             }
-//         })
-//         const posicion = index[0];
-//         usuario.vuelos.splice(posicion, vuelo)
-//         usuario.save()
-//             .then(result => res.status(201).json(result))
-//             .catch(err => res.status(503).json(err));
-//     })
-// })
+// ACTUALIZAR UN DETERMINADO COMENTARIO MEDIANTE UN "id"
+router.put("/:id", (req, res) => {
+    Comentario.findByIdAndUpdate(req.params.id, {$set: {"comentario": req.body.comentario
+                                                  }}, {new: true}, (err, doc) => {
+        err ? res.json(err) : res.json(doc)
+    })
+})
 
 module.exports = router;

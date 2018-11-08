@@ -14,7 +14,8 @@ class TweetUser extends Component {
     constructor() {
         super();
         this.state = {
-            descripcion: ''
+            descripcion: '',
+            modalIsOpen: false // ----------- ver
         };
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
