@@ -74,32 +74,36 @@ class ComentariosTweet extends Component {
         return(
             <div className="App">
                 <Collapsible trigger="Comentarios">
-                <ul>
-                    {
-                        this.state.comentarios.map((coment, i) => 
-                            <li key={i}>
-                                {
-                                    usuario._id === coment.usuarioId ?
-                                    <CommentUser informacion={{usuario, tweet, coment, i}}/>  
-                                    :
-                                    <CommentNotUser informacion={{usuario, tweet, coment, i}}/>
-                                }
-                                
-                            </li>
-                        )
-                    }
-                </ul>
-                <form onClick={this.comentarTweet.bind(this, usuario, tweet)}>
-                    <div className="form-row">
-                        <div className="form-group col-md-4">   
-                            <input type="text" className="form-control" name="comentario" 
-                                    onChange={this.handleInputChange.bind(this)} value={this.state.comentario} placeholder="Comentario..."/>
+                <div className="row">
+                    <ul>
+                        {
+                            this.state.comentarios.map((coment, i) => 
+                                <li key={i}>
+                                    {
+                                        usuario._id === coment.usuarioId ?
+                                        <CommentUser informacion={{usuario, tweet, coment, i}}/>  
+                                        :
+                                        <CommentNotUser informacion={{usuario, tweet, coment, i}}/>
+                                    }
+                                    
+                                </li>
+                            )
+                        }
+                    </ul>
+                </div>
+                <div className="row">
+                    <form onClick={this.comentarTweet.bind(this, usuario, tweet)}>
+                        <div className="form-row">
+                            <div className="form-group col-md-4">   
+                                <input type="text" className="form-control" name="comentario" 
+                                        onChange={this.handleInputChange.bind(this)} value={this.state.comentario} placeholder="Comentario..."/>
+                            </div>
+                            <div className="form-group form-check">
+                                <button type="submit" className="btn btn-primary bg-info">Comentar</button>
+                            </div>
                         </div>
-                        <div className="form-group form-check">
-                            <button type="submit" className="btn btn-primary bg-info">Comentar</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
                 </Collapsible>
             </div> 
         );
