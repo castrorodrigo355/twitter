@@ -50,7 +50,7 @@ class Tweets extends Component {
         const usuario = this.state.usuarioLogueado
         return (
             <div className="App">
-                <ul>
+                <ul className="Menutweet">
                     {
                         this.state.tweets && this.state.tweets.map((tweet, key) => 
                         <li key={key}>

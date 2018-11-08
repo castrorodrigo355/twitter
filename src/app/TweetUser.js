@@ -53,6 +53,7 @@ class TweetUser extends Component {
         })
         .then(res => res.json())
         .then(data => {
+            console.log(data)
         });
     }
 
@@ -88,50 +89,52 @@ class TweetUser extends Component {
     render(){
         const {usuario, tweet, key} = this.props.informacion;
         return(
-            <div className="card border-success mb-3 bg-transparent border-success">
-                <div className="card-header">
-                    <div className="row">
-                        <div className="col">
-                            <p className="card-text">{tweet.fecha}</p>
-                        </div>
-                        <div className="col">
-                            <p className="card-text">{tweet.titulo}</p>
-                        </div>
-                        <div className="col">
-                            <div className="row">
-                                <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
-                                <button type="submit" onClick={this.openModal.bind(this, tweet.descripcion)} className="btn btn-primary bg-info">Edit</button>
-                                    <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} 
-                                            onRequestClose={this.closeModal} style={customStyles} contentLabel="Example Modal">
-                                        <h2 ref={subtitle => this.subtitle = subtitle}>Actualizar Tweet</h2>
-                                        <form onSubmit={this.actualizarTweet.bind(this, tweet._id)}>
-                                            <div className="form-row">
-                                                <div className="form-group col-md-6">
-                                                    <input type="text" className="form-control" name="descripcion" 
-                                                            defaultValue={this.state.descripcion} 
-                                                            onChange={this.handleInputChange.bind(this)} placeholder="Descripcion..."/>
-                                                </div>
-                                                <div className="form-group form-check">
-                                                    <button type="submit" className="btn btn-primary bg-info">Aceptar</button>
-                                                    <button className="btn btn-danger" onClick={this.closeModal}>Cancelar</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </Modal>
-                                <button type="submit" onClick={this.deleteTweet.bind(this, tweet._id)} className="btn btn-primary bg-danger">Delete</button>
+            <div className="App">
+                <div className="card border-success mb-3 bg-transparent border-success">
+                    <div className="card-header">
+                        <div className="row">
+                            <div className="col">
+                                <p className="card-text">{tweet.fecha}</p>
                             </div>
-                        </div>                                        
-                    </div>
-                </div>
-                <div className="card-body text-success">
-                    <div className="row">
-                        <div className="col">
-                            <p className="card-text">{tweet.descripcion}</p>
+                            <div className="col">
+                                <p className="card-text">{tweet.titulo}</p>
+                            </div>
+                            <div className="col">
+                                <div className="row">
+                                    <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
+                                    <button type="submit" onClick={this.openModal.bind(this, tweet.descripcion)} className="btn btn-primary bg-info">Edit</button>
+                                        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} 
+                                                onRequestClose={this.closeModal} style={customStyles} contentLabel="Example Modal">
+                                            <h2 ref={subtitle => this.subtitle = subtitle}>Actualizar Tweet</h2>
+                                            <form onSubmit={this.actualizarTweet.bind(this, tweet._id)}>
+                                                <div className="form-row">
+                                                    <div className="form-group col-md-6">
+                                                        <input type="text" className="form-control" name="descripcion" 
+                                                                defaultValue={this.state.descripcion} 
+                                                                onChange={this.handleInputChange.bind(this)} placeholder="Descripcion..."/>
+                                                    </div>
+                                                    <div className="form-group form-check">
+                                                        <button type="submit" className="btn btn-primary bg-info">Aceptar</button>
+                                                        <button className="btn btn-danger" onClick={this.closeModal}>Cancelar</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </Modal>
+                                    <button type="submit" onClick={this.deleteTweet.bind(this, tweet._id)} className="btn btn-primary bg-danger">Delete</button>
+                                </div>
+                            </div>                                        
                         </div>
                     </div>
-                </div>
-                <div className="card-footer">
-                    <ComentariosTweet informacion={{usuario, tweet}}/>
+                    <div className="card-body text-success">
+                        <div className="row">
+                            <div className="col">
+                                <p className="card-text">{tweet.descripcion}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card-footer">
+                        <ComentariosTweet informacion={{usuario, tweet}}/>
+                    </div>
                 </div>
             </div>
         );
