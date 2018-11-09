@@ -19,6 +19,9 @@ app.use("/usuarios", authValidator, routerUsuarios);
 const routerTwit = require("./routes/tweet");
 app.use('/tweets', routerTwit);
 // -----------------------------------------------------------------
+const routerLikes = require("./routes/likes");
+app.use('/likes', routerLikes);
+// -----------------------------------------------------------------
 const routerComentario = require("./routes/comentarios");
 app.use('/comentarios', routerComentario);
 // -----------------------------------------------------------------

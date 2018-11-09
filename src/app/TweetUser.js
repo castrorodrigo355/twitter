@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
+import jwt_decode from 'jwt-decode';
 import ComentariosTweet from './ComentariosTweet';
 import './App.css';
 
@@ -15,10 +16,30 @@ class TweetUser extends Component {
         super();
         this.state = {
             descripcion: '',
-            modalIsOpen: false // ----------- ver
+            modalIsOpen: false, // ----------- ver
+            likes: []
         };
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+    }
+
+    componentDidMount(){
+        this.obtenerlikes();
+
+    }
+
+    obtenerlikes(){
+        const idTweet = this.props.informacion.tweet._id;
+        const token = localStorage.getItem('token');
+        fetch(`/likes/${idTweet}`, {
+            method: 'GET',
+            headers: {token}
+        })
+        .then(response => response.json())
+        .then(likes => {
+            this.setState({likes})
+        })
+        .catch(err => console.log(err));
     }
 
     componentWillMount() {
@@ -85,9 +106,41 @@ class TweetUser extends Component {
         })
         .catch(err => console.error(err));
     }
+
+    likearTweet(idTweet){
+        let token = localStorage.getItem('token');
+        var decoded = jwt_decode(token);
+        const id = decoded.id;
+        const date = new Date();
+        const dia = date.getDate();
+        const mes = date.getMonth() + 1;
+        const anio = date.getFullYear();
+        const fecha = dia+"/"+mes+"/"+anio;
+        fetch(`/likes`, {
+            method: 'POST',
+            body: JSON.stringify({
+                        fecha: fecha,
+                        tweetId: idTweet,
+                        usuarioId: id
+            }),
+            headers: {
+                token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            //window.M.toast({html: 'Task Saved'});
+        })
+        .catch(err => console.error(err));
+    }
     
     render(){
         const {usuario, tweet, key} = this.props.informacion;
+        var usuariosIdLike = this.state.likes.map(elem => elem.usuarioId);
+        var bool = usuariosIdLike.includes(usuario._id);
         return(
             <div className="App">
                 <div className="card border-success mb-3 bg-transparent border-success">
@@ -100,11 +153,17 @@ class TweetUser extends Component {
                                 <p className="card-text">{tweet.titulo}</p>
                             </div>
                             <div className="col">
-                                <p className="card-text">{tweet.likes}</p>
+                                <p className="card-text">{this.state.likes.length}</p>
                             </div>
                             <div className="col">
                                 <div className="row">
-                                    <button type="submit" className="btn btn-primary bg-secondary">Like</button>
+                                    {
+                                        bool ?
+                                        <button type="submit" onClick={this.likearTweet.bind(this, tweet._id)} className="btn btn-primary bg-secondary" disabled>Like</button>
+                                        :
+                                        <button type="submit" onClick={this.likearTweet.bind(this, tweet._id)} className="btn btn-primary bg-secondary">Like</button>
+                                    }
+                                    
                                     <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
                                     <button type="submit" onClick={this.openModal.bind(this, tweet.descripcion)} className="btn btn-primary bg-info">Edit</button>
                                         <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} 
