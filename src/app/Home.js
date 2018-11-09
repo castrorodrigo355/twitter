@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import UsuarioProfile from './UsuarioProfile';
 import Tweets from './Tweets';
+import People from './People';
 import FormAddTweet from './FormAddTweet';
 import './App.css';
 
@@ -20,6 +21,7 @@ class Home extends Component {
                     <div className="col-3 columna1">
                         <UsuarioProfile/>
                         <FormAddTweet/>
+                        <People/>
                     </div>
                     <div className="col-9 columna2">
                         <Tweets/>
