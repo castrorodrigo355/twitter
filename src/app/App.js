@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Estilos from './Estilos';
 import Home from './Home';
 import Login from './Login';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
