@@ -12,7 +12,6 @@ class FormAddTweet extends Component {
 
     handleInputChange(e) {
         const {value, name} = e.target;
-        //console.log(value, name);
         this.setState({
           [name]: value
         });
@@ -53,17 +52,17 @@ class FormAddTweet extends Component {
             <div>
                 <div className="card letrablanca border m-2 bg-transparent">
                     <div className="card-header">
-                        QUE ESTAS PENSANDO TWEETEAR ???
+                        QUE DESEA TWEETEAR ?
                     </div>
                     <div className="card-body text-success">
                         <form onSubmit={this.agregarTweet.bind(this)}>
-                            <div className="form-row">
+                            <div className="form-row m-2">
                                 <input type="text" className="form-control" name="descripcion" 
                                         onChange={this.handleInputChange.bind(this)} value={this.state.descripcion} placeholder="Descripcion"/>
                             </div>
-                                <div className="form-group form-check">
-                                    <button type="submit" className="btn btn-primary bg-info">Twittear</button>
-                                </div>
+                            <div className="form-row m-2">
+                                <button type="submit" className="btn btn-primary bg-info">Twittear</button>
+                            </div> 
                         </form>
                     </div>
                 </div>
