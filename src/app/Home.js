@@ -46,6 +46,8 @@ class Home extends Component {
                                         token={this.state.token}/>
                         <FormAddTweet   usuario={this.state.usuarioLogueado}
                                         token={this.state.token}/>
+                        <People usuario={this.state.usuarioLogueado}
+                                token={this.state.token}/>
                     </div>
                     <div className="col-8 columna2">
                         <Tweets usuario={this.state.usuarioLogueado}

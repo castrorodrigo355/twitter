@@ -20,6 +20,8 @@ class ComentariosTweet extends Component {
             idComentUpdate:"",
             comentarioUpdate: "",
         };
+        this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     componentDidMount(){
@@ -142,7 +144,7 @@ class ComentariosTweet extends Component {
                             this.state.comentarios.map((coment, i) => 
                                 <li key={i}>
                                     {
-                                        <div className="card">
+                                        <div className="card m-2">
                                             <div className="card-header">
                                                 <div className="row">
                                                     <div className="col">
@@ -168,7 +170,7 @@ class ComentariosTweet extends Component {
                                                         </div>
                                                         <div className="col">
                                                         <button type="submit" onClick={this.openModal.bind(this, coment)} className="btn btn-primary bg-info">Edit</button>
-                                                        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} 
+                                                            <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
                                                                     onRequestClose={this.closeModal} style={customStyles} contentLabel="Example Modal">
                                                                 <h2 ref={subtitle => this.subtitle = subtitle}>Actualizar Tweet</h2>
                                                                 <form onSubmit={this.actualizarComentario.bind(this, this.state.idComentUpdate)}>
@@ -207,8 +209,8 @@ class ComentariosTweet extends Component {
                                 </li>
                             )
                         }
-                        <form >
-                            <div onClick={this.comentarTweet.bind(this, token, usuario, tweet)} className="form-row">
+                        <form className="mt-2" onSubmit={this.comentarTweet.bind(this, token, usuario, tweet)}>
+                            <div className="form-row">
                                 <div className="form-group col-md-4">   
                                     <input type="text" className="form-control" name="comentario" 
                                             onChange={this.handleInputChange.bind(this)} value={this.state.comentario} placeholder="Comentario..."/>
