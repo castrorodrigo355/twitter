@@ -69,13 +69,16 @@ class TweetUser extends Component {
         fetch(`/tweets/${idTweet}`, {
             method: 'DELETE',
             headers: {
-                token
+                token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
         .then(res => res.json())
         .then(data => {
             console.log(data)
         });
+        this.props.onObtenerTweets();
     }
 
     handleInputChange(e) {
@@ -131,7 +134,7 @@ class TweetUser extends Component {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             //window.M.toast({html: 'Task Saved'});
         })
         .catch(err => console.error(err));

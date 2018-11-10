@@ -1,8 +1,8 @@
 const {Schema, mongoose} = require("../database/database")
-var twit = new Schema({ titulo: String,
+var twit = new Schema({ nombre: String,
+                        apellido: String,
                         fecha: String,
                         descripcion: String,
-                        likes: Number,
                         usuarioId: { type: Schema.ObjectId, ref: "User" }})
 var Twit = mongoose.model("Twit", twit)
 

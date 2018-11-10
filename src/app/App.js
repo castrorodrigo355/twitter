@@ -8,9 +8,10 @@ import './App.css';
 class App extends Component {
 
     render() {
-        let token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         return (
-            <div>
+            <div className="App" style={{height: "100vh"}}>
+                
                 <Router>
                     {
                         token ?

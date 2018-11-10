@@ -9,20 +9,16 @@ class Tweets extends Component {
     constructor() {
         super();
         this.state = {
-            usuarioLogueado: {},
             tweets: []
         };
     }
 
     componentDidMount() {
-        const token = localStorage.getItem('token');
-        const decoded = jwt_decode(token);
-        const id = decoded.id;
-        this.obtenerTweets(token)
-        this.obtenerUser(token, id)
+        this.obtenerTweets();
     }
 
-    obtenerTweets(token){
+    obtenerTweets(){
+        const token = this.props.token
         fetch('/tweets', {
             method: 'GET',
             headers: {token}
@@ -34,31 +30,84 @@ class Tweets extends Component {
         .catch(err => console.log(err));
     }
 
-    obtenerUser(token, id){
-        fetch(`/usuarios/${id}`, {
-            method: 'GET',
-            headers: {token}
+    deleteTweet(idTweet){
+        let token = this.props.token;
+        fetch(`/tweets/${idTweet}`, {
+            method: 'DELETE',
+            headers: {
+                token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }   
         })
-        .then(response => response.json())
-        .then(usuarioLogueado => {
-            this.setState({usuarioLogueado})
-        })
-        .catch(err => console.log(err));
+        .then(res => res.json())
+        .then(response => {
+            console.log(response)   // Uncaught (in promise) SyntaxError: Unexpected end of JSON input at eval (Tweets.js:83)
+        });
+        this.obtenerTweets()
     }
     
     render() {
-        const usuario = this.state.usuarioLogueado
         return (
-            <div className="App">
+            <div>
                 <ul className="Menutweet">
                     {
                         this.state.tweets && this.state.tweets.map((tweet, key) => 
                         <li key={key}>
                             {
-                                this.state.usuarioLogueado._id === tweet.usuarioId ?
-                                <TweetUser informacion={{usuario, tweet, key}}/>  
-                                :
-                                <TweetNotUser informacion={{usuario, tweet, key}}/>
+                                <div className="card letrablanca border m-2 bg-transparent">
+                                    <div className="card-header">
+                                        <div className="row">
+                                            <div className="col-6">
+                                                <div className="row">
+                                                    <div className="col">
+                                                        <p className="card-text">{tweet.nombre}</p>
+                                                    </div>
+                                                    <div className="col">
+                                                        <p className="card-text">{tweet.apellido}</p>
+                                                    </div>
+                                                    <div className="col">
+                                                        <p className="card-text">{tweet.fecha}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-6">
+                                                {
+                                                    tweet.usuarioId === this.props.usuario._id ?
+                                                    <div className="row">
+                                                        <div className="col">
+                                                            <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
+                                                        </div>
+                                                        <div className="col">
+                                                            <button type="submit" className="btn btn-primary bg-secondary">Like</button>
+                                                        </div>
+                                                        <div className="col">
+                                                            <button type="submit" className="btn btn-primary bg-info">Edit</button>
+                                                        </div>
+                                                        <div className="col">
+                                                            <button type="submit" onClick={this.deleteTweet.bind(this, tweet._id)} className="btn btn-primary bg-danger">Delete</button>
+                                                        </div>
+                                                    </div>
+                                                    :
+                                                    <div className="row">
+                                                        <div className="col">
+                                                            <button type="submit" className="btn btn-primary bg-alert">Retweet</button>
+                                                        </div>
+                                                        <div className="col">
+                                                            <button type="submit" className="btn btn-primary bg-secondary">Like</button>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="card-body">
+                                        <p className="card-text">{tweet.descripcion}</p>
+                                    </div>
+                                    <div className="card-footer">
+                                        ksfksñenfksñnnsek
+                                    </div>
+                                </div>
                             }
                         </li>
                         )
