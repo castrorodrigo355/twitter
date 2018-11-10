@@ -104,6 +104,7 @@ class People extends Component {
                                                     </div>
                                                     <div className="card-footer">
                                                         <button type="submit" className="btn btn-primary bg-primary">Enviar Solicitud</button>
+                                                        <button className="btn btn-danger" onClick={this.closeModal}>Cancelar</button>
                                                     </div>
                                                 </div>
                                             </Modal>
