@@ -3,6 +3,7 @@ import jwt_decode from 'jwt-decode';
 import UsuarioProfile from './UsuarioProfile';
 import Tweets from './Tweets';
 import People from './People';
+import Solicitudes from './Solicitudes';
 import FormAddTweet from './FormAddTweet';
 import './App.css';
 
@@ -50,6 +51,8 @@ class Home extends Component {
                                 token={this.state.token}/>
                     </div>
                     <div className="col-8 columna2">
+                        <Solicitudes usuario={this.state.usuarioLogueado}
+                                     token={this.state.token}/>
                         <Tweets usuario={this.state.usuarioLogueado}
                                 token={this.state.token}/>
                     </div>

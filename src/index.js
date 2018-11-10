@@ -25,6 +25,9 @@ app.use('/likes', routerLikes);
 const routerComentario = require("./routes/comentarios");
 app.use('/comentarios', routerComentario);
 // ----------------------------------------------------------
+const routerSolicitudes = require("./routes/solicitudes");
+app.use('/solicitudes', routerSolicitudes);
+// ----------------------------------------------------------
 app.get("/*", (req, res) => {
     res.end("Archivo no encontrado");
 });
