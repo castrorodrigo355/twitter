@@ -52,7 +52,11 @@ class People extends Component {
         const token = localStorage.getItem('token');
         fetch(`/usuarios`, {
             method: 'GET',
-            headers: {token}
+            headers: {
+                token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         })
         .then(response => response.json())
         .then(people => {

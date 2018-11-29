@@ -8,13 +8,7 @@ const secret = '56asiyuhdjkbasdhtiy8ou192e';
 router.post('/', function (req, res) {
     let data = req.body;
     //console.log(data);
-    User
-        .findOne(
-            {
-                email: data.email,
-                dni: data.dni
-            }
-        )
+    User.findOne({email: data.email, dni: data.dni})
         .then(user => {
             if(user){
                 let user2 = user.toJSON();

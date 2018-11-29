@@ -11,13 +11,12 @@ const routerLogin = require('./routes/login');
 app.use('/login', routerLogin);
 // ----------------------------------------------------------
 const routerUsuarios = require("./routes/usuarios");
-// ----------------------------------------------------------
 const authValidator = require('./middlewares/authValidator');
 app.use("/usuarios", authValidator, routerUsuarios);
 // app.use("/usuarios", routerUsuarios);
 // ----------------------------------------------------------
 const routerTwit = require("./routes/tweet");
-app.use('/tweets', routerTwit);
+app.use('/tweets', authValidator, routerTwit);
 // ----------------------------------------------------------
 const routerLikes = require("./routes/likes");
 app.use('/likes', routerLikes);

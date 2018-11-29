@@ -62,10 +62,14 @@ class Tweets extends Component {
     }
 
     obtenerTweets(){
-        const token = this.props.token
+        const token = localStorage.getItem('token');
         fetch('/tweets', {
             method: 'GET',
-            headers: {token}
+            headers: {
+                token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         })
         .then(response => response.json())
         .then(tweets => {
@@ -75,7 +79,7 @@ class Tweets extends Component {
     }
 
     deleteTweet(idTweet){
-        let token = this.props.token;
+        const token = localStorage.getItem('token');
         fetch(`/tweets/${idTweet}`, {
             method: 'DELETE',
             headers: {
@@ -92,7 +96,7 @@ class Tweets extends Component {
     }
 
     actualizarTweet(idTweet){
-        let token = this.props.token;
+        const token = localStorage.getItem('token');
         fetch(`/tweets/${idTweet}`, {
             method: 'PUT',
             body: JSON.stringify({descripcion: this.state.descripcionUpdate}),
